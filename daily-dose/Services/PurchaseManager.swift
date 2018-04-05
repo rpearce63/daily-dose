@@ -24,6 +24,15 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
         productsRequest!.start()
     }
     
+    func purchaseRemoveAds() {
+        if SKPaymentQueue.canMakePayments() && products.count > 0 {
+            let removeAdProduct = products[0]
+            let payment = SKPayment(product: removeAdProduct)
+            SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().add(payment)
+            
+        }
+    }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         
@@ -39,6 +48,22 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                SKPaymentQueue.default().finishTransaction(transaction)
+                if transaction.payment.productIdentifier == IAP_REMOVE_ADS {
+                    UserDefaults.standard.set(true, forKey: IAP_REMOVE_ADS)
+                }
+                break
+            case .failed:
+                SKPaymentQueue.default().finishTransaction(transaction)
+                break
+            case .restored:
+                SKPaymentQueue.default().finishTransaction(transaction)
+                break
+            default: break
+            }
+        }
     }
 }
