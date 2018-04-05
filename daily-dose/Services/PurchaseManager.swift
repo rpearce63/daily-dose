@@ -18,7 +18,7 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
     var products = [SKProduct]()
     
     func fetchProducts() {
-        let productIds = NSSet(objects: IAP_REMOVE_ADS) as! Set<String>
+        let productIds : Set<String> = [IAP_REMOVE_ADS]
         productsRequest = SKProductsRequest(productIdentifiers: productIds)
         productsRequest!.delegate = self
         productsRequest!.start()
@@ -26,8 +26,9 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
     
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        print("productsRequest didReceive")
+        
         products = response.products
+        print("Received \(products.count) products in the request")
         for product in products {
             print(product.productIdentifier)
         }
