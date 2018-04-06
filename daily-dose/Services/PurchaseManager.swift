@@ -5,6 +5,7 @@
 //  Created by Rick Pearce on 4/5/18.
 //  Copyright © 2018 Rick Pearce. All rights reserved.
 //
+typealias CompletionHandler = (_ success: Bool) -> ()
 
 import Foundation
 import StoreKit
@@ -16,6 +17,7 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
     
     var productsRequest : SKProductsRequest?
     var products = [SKProduct]()
+    var transactionComplete: CompletionHandler?
     
     func fetchProducts() {
         let productIds : Set<String> = [IAP_REMOVE_ADS]
@@ -24,20 +26,34 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
         productsRequest!.start()
     }
     
-    func purchaseRemoveAds() {
+    func purchaseRemoveAds(onComplete: @escaping CompletionHandler) {
         if SKPaymentQueue.canMakePayments() && products.count > 0 {
+            transactionComplete = onComplete
             let removeAdProduct = products[0]
             let payment = SKPayment(product: removeAdProduct)
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
+        } else {
+            onComplete(false)
+        }
+    }
+    
+    func restorePurchases(onComplete: @escaping CompletionHandler) {
+        if SKPaymentQueue.canMakePayments() {
             
+            SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().restoreCompletedTransactions()
+            onComplete(true)
+            transactionComplete = onComplete
+        } else {
+            onComplete(false)
         }
     }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         
         products = response.products
-        print("Received \(products.count) products in the request")
+        //print("Received \(products.count) products in the request")
         for product in products {
             print(product.productIdentifier)
         }
@@ -49,20 +65,30 @@ class PurchaseManager: NSObject, SKProductsRequestDelegate, SKPaymentTransaction
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
+            print("transaction state: \(transaction.transactionState.rawValue)")
             switch transaction.transactionState {
-            case .purchased:
-                SKPaymentQueue.default().finishTransaction(transaction)
+            case .purchased, .purchasing:
+                if transaction.transactionState == .purchased {
+                    SKPaymentQueue.default().finishTransaction(transaction)
+                }
                 if transaction.payment.productIdentifier == IAP_REMOVE_ADS {
                     UserDefaults.standard.set(true, forKey: IAP_REMOVE_ADS)
+                    transactionComplete?(true)
                 }
                 break
             case .failed:
                 SKPaymentQueue.default().finishTransaction(transaction)
+                transactionComplete?(false)
                 break
             case .restored:
                 SKPaymentQueue.default().finishTransaction(transaction)
+                if transaction.payment.productIdentifier == IAP_REMOVE_ADS {
+                    UserDefaults.standard.set(true, forKey: IAP_REMOVE_ADS)
+                }
+                transactionComplete?(true)
                 break
-            default: break
+            default:
+                transactionComplete?(false)
             }
         }
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,9 +41,17 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QG6-hh-inp">
+                                        <rect key="frame" x="334" y="10" width="31" height="27"/>
+                                        <state key="normal" image="restore"/>
+                                        <connections>
+                                            <action selector="restoreBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3gy-v9-OdT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="QG6-hh-inp" secondAttribute="trailing" constant="10" id="UNg-lV-05v"/>
                                     <constraint firstItem="auA-f7-m7E" firstAttribute="centerX" secondItem="9hz-D8-MXS" secondAttribute="centerX" id="WHa-jb-FK9"/>
                                     <constraint firstItem="r2S-v8-fnn" firstAttribute="top" secondItem="9hz-D8-MXS" secondAttribute="top" id="eB7-4U-gUe"/>
                                     <constraint firstItem="r2S-v8-fnn" firstAttribute="leading" secondItem="9hz-D8-MXS" secondAttribute="leading" id="fDe-oS-svy"/>
@@ -51,6 +59,7 @@
                                     <constraint firstAttribute="trailing" secondItem="r2S-v8-fnn" secondAttribute="trailing" id="ryC-6j-q1H"/>
                                     <constraint firstAttribute="height" constant="140" id="sFu-2b-Rhf"/>
                                     <constraint firstAttribute="bottom" secondItem="r2S-v8-fnn" secondAttribute="bottom" id="yjP-z5-FTs"/>
+                                    <constraint firstItem="QG6-hh-inp" firstAttribute="top" secondItem="9hz-D8-MXS" secondAttribute="top" constant="10" id="z7W-Dc-lVT"/>
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="videoThumbnail" translatesAutoresizingMaskIntoConstraints="NO" id="DuC-eS-btL">
@@ -88,6 +97,9 @@
                                         <state key="normal" title="REMOVE ADS">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="removeAdsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IUy-sE-ept"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -101,6 +113,9 @@
                                     <constraint firstItem="1Je-tU-CNw" firstAttribute="top" secondItem="YHZ-VJ-KGc" secondAttribute="top" id="xvw-gx-fBi"/>
                                 </constraints>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Pz0-kJ-j80">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -116,7 +131,9 @@
                             <constraint firstItem="DuC-eS-btL" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ygc-W0-ZRD"/>
                             <constraint firstItem="hGV-Cg-CZF" firstAttribute="top" secondItem="DuC-eS-btL" secondAttribute="bottom" constant="1" id="a5Z-R5-Tgd"/>
                             <constraint firstItem="hGV-Cg-CZF" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="aiB-RK-okI"/>
+                            <constraint firstItem="Pz0-kJ-j80" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="eot-kj-zEf"/>
                             <constraint firstItem="9hz-D8-MXS" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="gEF-Bn-vT3"/>
+                            <constraint firstItem="Pz0-kJ-j80" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="m0a-0B-7ki"/>
                             <constraint firstItem="hGV-Cg-CZF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="mTQ-hf-ewC"/>
                             <constraint firstItem="DuC-eS-btL" firstAttribute="top" secondItem="9hz-D8-MXS" secondAttribute="bottom" constant="1" id="xr9-rF-kCh"/>
                             <constraint firstItem="9hz-D8-MXS" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="zwO-h4-9gD"/>
@@ -124,7 +141,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="adsView" destination="YHZ-VJ-KGc" id="36H-Vl-fP0"/>
                         <outlet property="bannerView" destination="1Je-tU-CNw" id="qCl-Xo-gr5"/>
+                        <outlet property="removeAdsBtn" destination="WfS-Ww-h53" id="I1X-x9-8fu"/>
+                        <outlet property="restoreBtn" destination="QG6-hh-inp" id="Owd-QP-oex"/>
+                        <outlet property="spinner" destination="Pz0-kJ-j80" id="7id-kt-v83"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -134,6 +155,7 @@
     </scenes>
     <resources>
         <image name="BGImage" width="475" height="300"/>
+        <image name="restore" width="31" height="27"/>
         <image name="videoThumbnail" width="375" height="250"/>
     </resources>
 </document>
